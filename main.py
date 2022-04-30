@@ -1,6 +1,7 @@
 import logging 
 from aiogram import Bot, Dispatcher, executor, types
 import markups as nav
+import kurs as k
 
 from aiogram.types import InlineKeyboardMarkup, InlineKeyboardButton
 
@@ -14,13 +15,13 @@ dp = Dispatcher(bot)
 
 contactButtons = InlineKeyboardMarkup(row_width=1)
 btnInst = InlineKeyboardButton(text='🧿 Instagram', url='https://instagram.com/kiev.exchange')
-btnTg = InlineKeyboardButton(text='📲 Написать менеджеру', url='https://t.me/kiev_exchange_chat')
+btnTg = InlineKeyboardButton(text='📲 Написать менеджеру', url='https://t.me/kievbtc777')
 contactButtons.add(btnInst).add(btnTg)
 
 #manager button 
 
 managerButton = InlineKeyboardMarkup(row_width=1)
-btnTgManager = InlineKeyboardButton(text='📲 Написать менеджеру', url='https://t.me/kiev_exchange_chat')
+btnTgManager = InlineKeyboardButton(text='📲 Написать менеджеру', url='https://t.me/kievbtc777')
 managerButton.add(btnTgManager)
 
 
@@ -43,19 +44,24 @@ managerButton.add(btnTgManager)
 
 @dp.message_handler(commands=['start'])
 async def command_start(message: types.Message):
-	await bot.send_message(message.from_user.id, 'Добро пожаловать!'.format(message.from_user), reply_markup = nav.mainMenu)
+	await bot.send_message(message.from_user.id, 'Добро пожаловать!' .format(message.from_user), reply_markup = nav.mainMenu)
 
 @dp.message_handler()
 async def bot_message(message: types.Message):
 	if message.text == '💱 Актуальные курсы':
-		await bot.send_message(message.from_user.id, '💱 *Актуальный курс валюты*\n\nПокупка - продажа\n🇺🇸 USD 0.0000 - 0.0000\n🇪🇺 EUR 0.0000 - 0.0000\n🇬🇧 GBP 0.0000 - 0.0000\n\nДля уточнения деталей свяжитесь с менеджером. '.format(message.from_user), parse_mode= 'Markdown', reply_markup = managerButton)
+		await bot.send_message(message.from_user.id, f"""
+			💱 *Актуальный курс валюты*\n\nПокупка - продажа
+			\n🇺🇸 USD {k.usdBuy} / {k.usdSalle}\n🇪🇺 EUR {k.eurBuy} / {k.eurSalle}\n🇬🇧 GBP {k.gbpBuy} / {k.gbpSalle}\n\n💎 Крипта {k.usdtBuy} / {k.usdtSalle}\n
+			\nДля уточнения деталей свяжитесь с менеджером. 
+			""".format(message.from_user), parse_mode= 'Markdown', reply_markup = managerButton)
 	elif message.text == '💵 Обмен валюты':
 		await bot.send_message(message.from_user.id, '💵 *Обмен валюты*\n\nНа данный момент автоматический режим обмена не работает, мы стараемся максимально быстро исправить это неудобство.\n\nВы всегда можете совершить обмен связавшись с менеджером👇'.format(message.from_user), parse_mode= 'Markdown', reply_markup = managerButton)
+		await state.get_data()
 	elif message.text == '📋 Услуги компании':
 		await message.answer_photo('https://i.ibb.co/YDn4ckh/service.png')
 		await bot.send_message(message.from_user.id, '📋 *Услуги компании*\n\n💎 *Операции с криптой*\nПокупка и продажа BTC, ETH, USDT за наличные доллары, евро, гривны и другие валюты.\n\n🇨🇳 *Оплата Юаня*\nЮань по лучшему курсу. Наличный и безналичный расчёт. Оплата счетов/инвойсов быстро и оперативно.\n\n🌐 *Денежные переводы*\nWire Transfer (SWIFT-SEPA), оплата инвойсов.\n\n🚓 *Инкассация*\nИнкассация денежных средств по всей Украине и Европе мы гарантируем 100% безопасность.\n\n💳 *Пополнение карт*\nПополнение банковских карт VISA/MASTERCARD по самым выгодным условиям.\n\nСвяжитесь с нами, нажав кнопку ниже, и получите свое уникальное предложение! 👇🏻'.format(message.from_user), parse_mode= 'Markdown', reply_markup = managerButton)
-	elif message.text == '🪙 Перестановки':
-		await bot.send_message(message.from_user.id, '🪙 *Перестановки*\n\nДенежные переводы по Украине и всему миру с самым выгодным и актуальным курсом обмена валют.\n\nДля уточнения деталей свяжитесь с менеджером.'.format(message.from_user), parse_mode= 'Markdown', reply_markup = managerButton)
+	elif message.text == '🌐 Перестановки':
+		await bot.send_message(message.from_user.id, '🌐 *Перестановки*\n\nДенежные переводы по Украине и всему миру с самым выгодным и актуальным курсом обмена валют.\n\nДля уточнения деталей свяжитесь с менеджером.'.format(message.from_user), parse_mode= 'Markdown', reply_markup = managerButton)
 	elif message.text == '🏦 Kiev Exchange 🏦':
 		await message.answer_photo('https://i.ibb.co/cL75yK1/kiev-exchange.png')
 		await bot.send_message(message.from_user.id, '*Kiev Exchange* — Безопасные и конфиденциальные сделки. Большие объемы, выгодный процент и хорошие условия для постоянных клиентов.'.format(message.from_user), parse_mode= 'Markdown', reply_markup = contactButtons)

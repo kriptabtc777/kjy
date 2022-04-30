@@ -6,7 +6,7 @@ from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 #main menu 
 btnCurrency = KeyboardButton('💱 Актуальные курсы') 
 btnExchange = KeyboardButton('💵 Обмен валюты')
-btnTransfer = KeyboardButton('🪙 Перестановки')
+btnTransfer = KeyboardButton('🌐 Перестановки')
 btnService = KeyboardButton('📋 Услуги компании')
 btnAbout = KeyboardButton('🏦 Kiev Exchange 🏦')
 
